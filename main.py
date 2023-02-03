@@ -40,6 +40,15 @@ clock = pygame.time.Clock()
 
 font_name = pygame.font.match_font('Times New Roman')
 
+
+def write_score_text(surface, text, size, x, y):
+    font = pygame.font.Font(font_name, size)
+    text_surface = font.render(text, True, RED)
+    text_rect = text_surface.get_rect()
+    text_rect.midtop = (x, y)
+    surface.blit(text_surface, text_rect)
+
+
 # function for draw text
 def write_text(surf, text, size, x, y):
     font = pygame.font.Font(font_name, size)
@@ -48,11 +57,13 @@ def write_text(surf, text, size, x, y):
     text_rect.midtop = (x, y)
     surf.blit(text_surface, text_rect)
 
+
 # function for create new essence
 def new_esscense():
     m = Essence()
     all_sprites.add(m)
     mobs.add(m)
+
 
 # function for drawing the health bar
 def draw_shield_bar(surf, x, y, pct):
@@ -66,6 +77,7 @@ def draw_shield_bar(surf, x, y, pct):
     pygame.draw.rect(surf, RED, fill_rect)
     pygame.draw.rect(surf, WHITE, outline_rect, 2)
 
+
 # function to draw the number of lives
 def draw_lives(surf, x, y, lives, img):
     for i in range(lives):
@@ -73,6 +85,7 @@ def draw_lives(surf, x, y, lives, img):
         img_rect.x = 332 + 30 * i
         img_rect.y = 0
         surf.blit(img, img_rect)
+
 
 # Function to create a pause menu
 def pause():
@@ -96,6 +109,7 @@ def pause():
                     show_go_screen()
     background_sound.stop()
     in_game_background.play()
+
 
 # Creating a settings screen
 def settings_screen():
@@ -167,6 +181,7 @@ def show_go_screen():
                     settings_screen()
     background_sound.stop()
     in_game_background.play()
+
 
 # Class for creating player capabilities
 class Player(pygame.sprite.Sprite):
@@ -271,6 +286,7 @@ class Player(pygame.sprite.Sprite):
         self.hidden = True
         self.hide_timer = pygame.time.get_ticks()
         self.rect.center = (WIDTH / 2, HEIGHT + 200)
+
 
 # Class that configures non-game entities
 class Essence(pygame.sprite.Sprite):
@@ -511,7 +527,7 @@ if __name__ == '__main__':
         screen.fill(BLACK)
         screen.blit(background, background_rect)
         all_sprites.draw(screen)
-        write_text(screen, str(score), 18, WIDTH / 2, 10)
+        write_score_text(screen, str(score), 18, WIDTH / 2, 10)
         draw_shield_bar(screen, 5, 5, player.shield)
         draw_lives(screen, WIDTH - 100, 5, player.lives,
                    player_mini_img)
